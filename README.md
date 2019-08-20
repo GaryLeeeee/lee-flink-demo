@@ -99,3 +99,5 @@ DataStream<ItemViewCount> windowedData = pvData
     .aggregate(new CountAggregate(), new WindowResultFunction());
 ```
 
+--------
+TAKING NOTES FROM https://github.com/wuchong/my-flink-project

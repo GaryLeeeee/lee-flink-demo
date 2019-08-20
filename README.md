@@ -51,3 +51,5 @@ D:.
 |TopNHotItems|继承KeyedProcessFunction类,求某个窗口TopN的热门点击商品|
 |WindowResultFunction|实现WindowFunction接口,输出窗口的结果|
 |HotItems|运行类|
+|BatchJob|批处理|
+|StreamingJob|流处理|

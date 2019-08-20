@@ -26,23 +26,25 @@ public class HotItems {
         //为了不乱序，设置并发为1
         env.setParallelism(1);
 
+
+
         //读取'用户行为表'路径，因为没有真实环境就用离线文件吧
         URL fileUrl = HotItems.class.getClassLoader().getResource("UserBehavior.csv");
         Path filePath = Path.fromLocalFile(new File(fileUrl.toURI()));
-
         PojoTypeInfo<UserBehavior> pojoTypeInfo = (PojoTypeInfo<UserBehavior>)TypeExtractor.createTypeInfo(UserBehavior.class);
-
         //Java反射出来的字段是随机顺序的,所以需要显示排序~
         String[] fieldOrder = new String[]{"userId","itemId","categoryId","behavior","timestamp"};
-
         // 接收参数并生成pojo~
        PojoCsvInputFormat<UserBehavior> csvInput = new PojoCsvInputFormat<UserBehavior>(filePath,pojoTypeInfo,fieldOrder);
+
+
 
        env.createInput(csvInput,pojoTypeInfo)//创建数据源，得到DataStream
                //返回时间并生成watermark(水位线)->但超过end_time触发window的计算
                .assignTimestampsAndWatermarks(new AscendingTimestampExtractor<UserBehavior>() {
                    @Override
                    public long extractAscendingTimestamp(UserBehavior userBehavior) {
+                       //原始数据单位秒，转为毫秒就是*1000
                        return userBehavior.timestamp * 1000;
                    }
                })
@@ -69,18 +71,6 @@ public class HotItems {
        env.execute("Hot Item Jobs");
 
 
-    }
-
-    public static class ItemViewCount {
-        public long itemId;//商品ID
-        public long windowEnd; //窗口结束时间戳
-        public long viewCount;//商品的点击量
-
-        public ItemViewCount(long itemId, long windowEnd, long viewCount) {
-            this.itemId = itemId;
-            this.windowEnd = windowEnd;
-            this.viewCount = viewCount;
-        }
     }
 
 }

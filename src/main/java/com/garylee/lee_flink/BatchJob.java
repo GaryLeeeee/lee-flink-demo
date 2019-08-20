@@ -16,9 +16,10 @@
  * limitations under the License.
  */
 
-package com.garylee.lee-flink-project;
+package com.garylee.lee_flink;
 
 import org.apache.flink.api.java.ExecutionEnvironment;
+
 
 /**
  * Skeleton for a Flink Batch Job.

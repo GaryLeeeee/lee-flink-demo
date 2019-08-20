@@ -16,7 +16,9 @@
  * limitations under the License.
  */
 
-package com.garylee.lee-flink-project;
+package com.garylee.lee_flink;
+
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
